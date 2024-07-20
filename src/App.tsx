@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Allotment } from 'allotment'
 import 'allotment/dist/style.css'
 import { produce } from 'immer'
+import CodeEditor from './components/CodeEditor'
 
 function App() {
 	const initialFiles = {
@@ -27,10 +28,6 @@ void main() {
 		},
 	}
 	const [files, setFiles] = useState(initialFiles)
-
-	const [fileName, setFileName] = useState('vertex')
-
-	const file = files[fileName]
 
 	const vertex = files['vertex'].value
 	const fragment = files['fragment'].value
@@ -113,36 +110,7 @@ void main() {
 		<div className="h-screen">
 			<Allotment>
 				<Allotment.Pane minSize={300}>
-					<div className="flex bg-[#1e1e1e] border-b border-zinc-700 ">
-						<button
-							className="bg-[#1e1e1e] text-white text-sm p-2"
-							disabled={fileName === 'vertex'}
-							onClick={() => setFileName('vertex')}
-						>
-							vertex
-						</button>
-						<button
-							className="bg-[#1e1e1e] text-white text-sm p-2"
-							disabled={fileName === 'fragment'}
-							onClick={() => setFileName('fragment')}
-						>
-							fragment
-						</button>
-					</div>
-					<Editor
-						height="100%"
-						theme="vs-dark"
-						path={file.name}
-						defaultLanguage={file.language}
-						value={file.value}
-						onChange={(value) => {
-							setFiles(
-								produce((draft) => {
-									draft[fileName].value = value
-								})
-							)
-						}}
-					/>
+					<CodeEditor files={files} setFiles={setFiles} />
 				</Allotment.Pane>
 				<Allotment.Pane snap minSize={300}>
 					<div className="h-full">
