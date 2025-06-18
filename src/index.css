@@ -7,3 +7,9 @@
 .sash-vertical::before {
 	border-radius: 50px;
 }
+
+.stats-panel {
+	right: 8px !important;
+	top: 8px !important;
+	left: unset !important;
+}

@@ -1,4 +1,4 @@
-import { OrbitControls, shaderMaterial } from '@react-three/drei'
+import { OrbitControls, shaderMaterial, Stats } from '@react-three/drei'
 import { Canvas, extend, ThreeElement, useFrame } from '@react-three/fiber'
 import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
@@ -83,6 +83,7 @@ function ShaderPreview({
 			<Canvas style={{ height: '100%' }} camera={{ position: [0, 0, 4], fov: 55 }}>
 				<ShaderMesh fragmentShader={debouncedFragment} vertexShader={debouncedVertex} />
 				<OrbitControls />
+				<Stats className="stats-panel" />
 			</Canvas>
 		</div>
 	)
