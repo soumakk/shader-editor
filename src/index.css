@@ -1,11 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer base {
-	html,
-	body,
-	#root {
-		@apply h-full w-full font-sans;
-	}
+.split-view-view::before {
+	background: transparent !important;
+}
+
+.sash-vertical::before {
+	border-radius: 50px;
 }

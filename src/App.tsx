@@ -1,121 +1,25 @@
-import { Editor } from '@monaco-editor/react'
-import { useState } from 'react'
 import { Allotment } from 'allotment'
 import 'allotment/dist/style.css'
-import { produce } from 'immer'
-import CodeEditor from './components/CodeEditor'
+import { useState } from 'react'
+import ShaderEditor from './components/ShaderEditor'
+import ShaderPreview from './components/ShaderPreview'
+import { initialFiles } from './lib/defaultShader'
+import { IFiles } from './lib/types'
 
 function App() {
-	const initialFiles = {
-		vertex: {
-			language: 'glsl',
-			name: 'vertex',
-			value: `attribute vec3 position;
-      
-uniform mat4 modelViewMatrix;
-uniform mat4 projectionMatrix;
-
-void main() {
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}`,
-		},
-		fragment: {
-			name: 'fragment',
-			language: 'glsl',
-			value: `void main() {
-  gl_FragColor = vec4(.0,0.5,1.0,1.0);
-}`,
-		},
-	}
-	const [files, setFiles] = useState(initialFiles)
-
-	const vertex = files['vertex'].value
-	const fragment = files['fragment'].value
-
-	const srcDoc = `
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <style type="text/css">
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html, body, #app {
-        height: 100%;
-        width: 100%;
-      }
-      #app {
-        position: fixed;
-        inset: 0;
-      }
-      canvas {
-        display: block;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module">
-      import {Renderer, Camera, Program, Mesh, Box,Transform, Orbit,Vec3} from 'https://cdn.jsdelivr.net/npm/ogl/dist/ogl.mjs';
-
-      const renderer = new Renderer();
-      const gl = renderer.gl;
-      document.getElementById("app").appendChild(gl.canvas);
-      
-      const camera = new Camera(gl);
-      camera.position.z = 5;
-      
-      function resize() {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.perspective({
-            aspect: gl.canvas.width / gl.canvas.height,
-        });
-      }
-      window.addEventListener('resize', resize, false);
-      resize();
-      
-      const controls = new Orbit(camera, {
-        target: new Vec3(0, 0, 0),
-      });
-
-      const scene = new Transform();
-      
-      const geometry = new Box(gl);
-    
-      const program = new Program(gl, {
-          vertex: \`${vertex}\`,
-          fragment: \`${fragment}\`,
-      });
-  
-      const mesh = new Mesh(gl, {geometry, program});
-      mesh.setParent(scene);
-  
-      requestAnimationFrame(update);
-      function update(t) {
-          requestAnimationFrame(update);
-          controls.update();
-          
-          renderer.render({scene, camera});
-      }
-    </script>
-  </body>
-</html>
-
-  `
+	const [files, setFiles] = useState<IFiles>(initialFiles)
 
 	return (
-		<div className="h-screen">
+		<div className="h-screen bg-neutral-950 p-2">
 			<Allotment>
 				<Allotment.Pane minSize={300}>
-					<CodeEditor files={files} setFiles={setFiles} />
+					<ShaderEditor files={files} setFiles={setFiles} />
 				</Allotment.Pane>
 				<Allotment.Pane snap minSize={300}>
-					<div className="h-full">
-						<iframe className="h-full w-full" srcDoc={srcDoc}></iframe>
-					</div>
+					<ShaderPreview
+						fragmentShader={files['fragment'].value}
+						vertexShader={files['vertex'].value}
+					/>
 				</Allotment.Pane>
 			</Allotment>
 		</div>
