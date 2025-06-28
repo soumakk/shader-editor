@@ -1,11 +1,11 @@
-import { useAtom } from 'jotai'
-import { primitiveAtom } from '../lib/atoms'
-import PlaneIcon from '../icons/PlaneIcon'
+import { useSetAtom } from 'jotai'
 import BoxIcon from '../icons/BoxIcon'
+import PlaneIcon from '../icons/PlaneIcon'
 import SphereIcon from '../icons/SphereIcon'
+import { primitiveAtom } from '../lib/atoms'
 
 export default function ActionMenu() {
-	const [activePrimitive, setActivePrimitive] = useAtom(primitiveAtom)
+	const setActivePrimitive = useSetAtom(primitiveAtom)
 	return (
 		<div className="fixed bottom-4 left-1/2 -translate-1/2 z-50">
 			<div className="bg-white rounded-full py-3 px-6 flex gap-5">

@@ -1,4 +1,6 @@
-export function setupGLSLLanguage(monaco) {
+import { Monaco } from '@monaco-editor/react'
+
+export function setupGLSLLanguage(monaco: Monaco) {
 	// Register GLSL language
 	monaco.languages.register({ id: 'glsl' })
 
@@ -32,10 +34,10 @@ export function setupGLSLLanguage(monaco) {
 	})
 }
 
-export function setupGLSLCompletionProvider(monaco) {
+export function setupGLSLCompletionProvider(monaco: Monaco) {
 	monaco.languages.registerCompletionItemProvider('glsl', {
 		triggerCharacters: ['.', '(', ' '],
-		provideCompletionItems: function (model, position) {
+		provideCompletionItems: function (model: any, position: any) {
 			const word = model.getWordUntilPosition(position)
 			const range = {
 				startLineNumber: position.lineNumber,
@@ -434,7 +436,7 @@ export function setupGLSLCompletionProvider(monaco) {
 	})
 }
 
-export function setupGLSLSyntaxHighlighting(monaco) {
+export function setupGLSLSyntaxHighlighting(monaco: Monaco) {
 	monaco.languages.setMonarchTokensProvider('glsl', {
 		tokenizer: {
 			root: [
