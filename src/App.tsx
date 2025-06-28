@@ -5,6 +5,7 @@ import ShaderEditor from './components/ShaderEditor'
 import ShaderPreview from './components/ShaderPreview'
 import { initialFiles } from './lib/defaultShader'
 import { IFiles } from './lib/types'
+import ActionMenu from './components/ActionMenu'
 
 function App() {
 	const [files, setFiles] = useState<IFiles>(initialFiles)
@@ -22,6 +23,8 @@ function App() {
 					/>
 				</Allotment.Pane>
 			</Allotment>
+
+			<ActionMenu />
 		</div>
 	)
 }

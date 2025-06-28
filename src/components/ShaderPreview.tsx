@@ -1,9 +1,11 @@
 import { OrbitControls, shaderMaterial, Stats } from '@react-three/drei'
 import { Canvas, extend, ThreeElement, useFrame } from '@react-three/fiber'
+import { useAtomValue } from 'jotai'
 import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import useDebounce from '../lib/useDebounce'
+import { primitiveAtom } from '../lib/atoms'
 import { defaultFragmentShader, defaultVertexShader } from '../lib/defaultShader'
+import useDebounce from '../lib/useDebounce'
 
 const CustomShaderMaterial = shaderMaterial(
 	{
@@ -30,6 +32,8 @@ function ShaderMesh({
 	fragmentShader: string
 	vertexShader: string
 }) {
+	const activePrimitive = useAtomValue(primitiveAtom)
+
 	const materialRef = useRef<any>(null)
 	const [currentShader, setCurrentShader] = React.useState({
 		fragment: fragmentShader,
@@ -60,9 +64,22 @@ function ShaderMesh({
 		}
 	})
 
+	function getPrimitive(type: string) {
+		switch (type) {
+			case 'plane':
+				return <planeGeometry args={[2, 2, 100, 100]} />
+			case 'box':
+				return <boxGeometry args={[1, 1, 1]} />
+			case 'sphere':
+				return <sphereGeometry args={[1, 64, 64]} />
+			default:
+				return <planeGeometry args={[2, 2, 100, 100]} />
+		}
+	}
+
 	return (
 		<mesh>
-			<planeGeometry args={[2, 2, 100, 100]} />
+			{getPrimitive(activePrimitive)}
 			<customShaderMaterial ref={materialRef} key={CustomShaderMaterial.key} />
 		</mesh>
 	)
@@ -80,7 +97,7 @@ function ShaderPreview({
 
 	return (
 		<div className="bg-neutral-900 rounded-lg h-full relative ml-1">
-			<Canvas style={{ height: '100%' }} camera={{ position: [0, 0, 4], fov: 55 }}>
+			<Canvas style={{ height: '100%' }} camera={{ position: [0, 0, 4], fov: 50 }}>
 				<ShaderMesh fragmentShader={debouncedFragment} vertexShader={debouncedVertex} />
 				<OrbitControls />
 				<Stats className="stats-panel" />

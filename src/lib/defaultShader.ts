@@ -32,8 +32,8 @@ void main() {
     
     // Simple wave displacement
     vec3 p = position;
-    p.z += sin(p.x * 2.0 + u_time) * 0.3;
-    p.z += cos(p.y * 3.0 + u_time * 0.2) * 0.2;
+    // p.z += sin(p.x * 2.0 + u_time) * 0.3;
+    // p.z += cos(p.y * 3.0 + u_time * 0.2) * 0.2;
     
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
 }

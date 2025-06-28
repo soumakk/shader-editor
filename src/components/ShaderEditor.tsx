@@ -2,6 +2,11 @@ import Editor, { Monaco } from '@monaco-editor/react'
 import clsx from 'clsx'
 import { produce } from 'immer'
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
+import {
+	setupGLSLCompletionProvider,
+	setupGLSLLanguage,
+	setupGLSLSyntaxHighlighting,
+} from '../lib/glsl'
 import { IFiles } from '../lib/types'
 
 function ShaderEditor({
@@ -21,38 +26,10 @@ function ShaderEditor({
 		editorRef.current = editor
 		monacoRef.current = monaco
 
-		// Register GLSL language if not already registered
-		if (!monaco.languages.getLanguages().find((lang: any) => lang.id === 'glsl')) {
-			monaco.languages.register({ id: 'glsl' })
-
-			// Enhanced GLSL syntax highlighting
-			monaco.languages.setMonarchTokensProvider('glsl', {
-				tokenizer: {
-					root: [
-						[
-							/\b(precision|attribute|uniform|varying|void|float|int|bool|vec2|vec3|vec4|mat2|mat3|mat4|sampler2D|samplerCube)\b/,
-							'keyword',
-						],
-						[
-							/\b(gl_Position|gl_FragColor|gl_FragCoord|gl_PointSize)\b/,
-							'variable.predefined',
-						],
-						[
-							/\b(main|sin|cos|tan|length|normalize|dot|cross|mix|step|smoothstep|clamp|abs|sign|floor|ceil|fract|mod|min|max|pow|exp|log|sqrt|texture2D)\b/,
-							'function',
-						],
-						[/\b(mediump|highp|lowp)\b/, 'keyword'],
-						[/[0-9]*\.[0-9]+([eE][\-+]?[0-9]+)?/, 'number.float'],
-						[/[0-9]+/, 'number'],
-						[/".*?"/, 'string'],
-						[/\/\/.*$/, 'comment'],
-						[/\/\*[\s\S]*?\*\//, 'comment'],
-					],
-				},
-			})
-		}
+		setupGLSLLanguage(monaco)
+		setupGLSLSyntaxHighlighting(monaco)
+		setupGLSLCompletionProvider(monaco)
 	}
-
 	function handleEditorChange(value?: string) {
 		setFiles(
 			produce((draft: any) => {
