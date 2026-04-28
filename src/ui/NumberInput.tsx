@@ -1,15 +1,7 @@
-import { NumberField } from "@base-ui/react/number-field";
-
 export function NumberInput({
-  min,
-  max,
-  step = 0.1,
   value,
   onChange,
 }: {
-  min?: number;
-  max?: number;
-  step?: number;
   value: number;
   onChange: (value: number) => void;
 }) {

@@ -5,14 +5,10 @@ export default function FileTab({
   isActive,
   onClick,
   title,
-  icon,
-  hasIndicator,
 }: {
   isActive: boolean;
   onClick: () => void;
   title: string;
-  icon: string;
-  hasIndicator?: boolean;
 }) {
   return (
     <button

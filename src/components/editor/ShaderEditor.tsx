@@ -111,14 +111,11 @@ export default function ShaderEditor({
             isActive={fileName === "vertex"}
             onClick={() => setFileName("vertex")}
             title="vertex.glsl"
-            icon="🔗"
           />
           <FileTab
             isActive={fileName === "fragment"}
             onClick={() => setFileName("fragment")}
             title="fragment.glsl"
-            icon="✨"
-            hasIndicator
           />
         </div>
 

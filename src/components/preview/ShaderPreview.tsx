@@ -1,27 +1,13 @@
 import { Grid, OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useAtom } from "jotai";
-import { Pause, Play, Settings } from "lucide-react";
+import { Pause, Play } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 
-import {
-  modelOptions,
-  previewSettingsAtom,
-  primitiveAtom,
-} from "../../lib/atoms";
-import { Checkbox } from "../../ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../ui/select";
+import { previewSettingsAtom } from "../../lib/atoms";
 import { Slider } from "../../ui/slider";
-import ShaderMesh from "./ShaderMesh";
-import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import PreviewTopBar from "./PreviewTopBar";
+import ShaderMesh from "./ShaderMesh";
 
 function MetricsTracker({
   fpsRef,
@@ -107,7 +93,7 @@ export default function ShaderPreview({
                 step={0.01}
                 max={6}
                 value={timeScale}
-                onValueChange={(e) => setTimeScale(parseFloat(e))}
+                onValueChange={(e) => setTimeScale(parseFloat(e.toString()))}
               />
             </div>
             <span className="text-xs text-slate-300 font-mono">
