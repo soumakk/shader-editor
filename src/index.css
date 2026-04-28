@@ -1,15 +1,53 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+
+@theme {
+    --font-mono: "Fira Code", monospace;
+    --font-sans: "Geist", sans-serif;
+
+    /* The deep abyss (use for the absolute back-most body background) */
+    --color-dark: #080c14;
+
+    /* Your Base (use for main panels, sidebars, or standard backgrounds) */
+    --color-background: #0d0f17;
+    --color-foreground: #ffffff;
+
+    /* Elevated Cards (use for cards sitting on top of the 900 or 950 base) */
+    --color-card: #151824;
+
+    /* Interactive/Hover Backgrounds (dropdowns, hovered items) */
+    --color-popover: #1a1d27;
+
+    /* Subtle Borders (dividers between items) */
+    --color-border: #ffffff1a;
+    --color-hover: #ffffff26;
+}
 
 .split-view-view::before {
-	background: transparent !important;
+    background: transparent !important;
 }
 
 .sash-vertical::before {
-	border-radius: 50px;
+    border-radius: 50px;
 }
 
 .stats-panel {
-	right: 8px !important;
-	top: 8px !important;
-	left: unset !important;
+    right: 8px !important;
+    top: 8px !important;
+    left: unset !important;
+}
+
+body {
+    @apply font-sans border-border;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
